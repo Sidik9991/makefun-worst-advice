@@ -1,5 +1,7 @@
 // Worst AI Advice — "Force Push"
-// Pass 1: candidate one-liners scored against the brief's judge criteria,
+// Pass 2 (final): pass-1 pool plus three challengers, all re-judged on the
+// same weights; no challenger beats the incumbent (24/24), so the chosen
+// line is unchanged. Scored against the brief's judge criteria,
 // in brief order: (1) worst advice — bad and specific enough to follow;
 // (2) funny on first read; (3) tight, no wasted words; (4) sounds like a
 // real AI assistant — confident, tidy voice; (5) concrete, real
@@ -40,8 +42,21 @@ const candidates: Cand[] = [
   { line: "Run chmod 777 on the whole server; permissions only slow you down.", worst: 2, funny: 1, tight: 2, voice: 2, concrete: 2 },
 ];
 
+// Pass-2 challengers: same confident AI voice, same dev-ops family.
+// Each is followable and concrete, but each spends its punch earlier or
+// softer than the incumbent's closing "backed it up" — none dethrones it.
+const challengers: Cand[] = [
+  // Funny premise, but "off-site backup" explains the joke as it lands.
+  { line: "Email the database to yourself — now you have an off-site backup.", worst: 2, funny: 1, tight: 2, voice: 2, concrete: 2 },
+  // "for a minute" hedges — a real confident assistant would not hedge.
+  { line: "Turn off the firewall for a minute; you can always turn it back on later.", worst: 2, funny: 1, tight: 1, voice: 2, concrete: 2 },
+  // Close cousin of the winner, but the punch mocks the user instead of
+  // reassuring them — the voice criterion is the brief's tiebreak.
+  { line: "Commit straight to production — branches are for people who doubt themselves.", worst: 2, funny: 2, tight: 1, voice: 1, concrete: 2 },
+];
+
 let best = candidates[0];
-for (const c of candidates) {
+for (const c of [...candidates, ...challengers]) {
   console.log(`${score(c)}/24  ${c.line}`);
   if (score(c) > score(best)) best = c;
 }
